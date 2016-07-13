@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.page.st.mapper.DiaryMapper">  
+  
+    <resultMap type="DiaryEntity" id="diaryResultMap">  
+        <result property="context" column="CONTEXT"/>  
+        <result property="userId" column="USER_ID"/>
+        <result property="diaryId" column="DIARY_ID"/>   
+        <result property="eventTs" column="EVENT_TS"/> 
+        <result property="updateTime" column="UPDATE_TIME"/>  
+        <result property="seqNo" column="SEQ_NO"/> 
+    </resultMap>  
+    
+    <!-- include 标签用 -->
+    <sql id="columns">
+    <![CDATA[TITLE,CONTEXT]]>
+    
+    </sql>
+    
+      
+    <!-- 查询学生，根据id -->  
+    <!--  <select id="getAllSummarys" resultType="SummaryEntity" resultMap="summaryResultMap">  
+        <![CDATA[ 
+            SELECT * from diary d 
+        ]]>   
+    </select>  -->
+    
+    
+     <!--执行增加操作的SQL语句。id和parameterType分别与IUserOperation接口中的addUser方法的名字和参数类型一致。
+    useGeneratedKeys设置为"true"表明要MyBatis获取由数据库自动生成的主键；keyProperty="id"指定把获取到的主键值注入到User的id属性--> 
+    <insert id="addDiary" parameterType="DiaryEntity" 
+        useGeneratedKeys="true" keyProperty="diaryId"> 
+        insert into DIARY(USER_ID,CONTEXT,EVENT_TS,EVENT_WHERE,PROVINCE,CITY,DISTRICT,UPDATE_TIME,CREATE_TIME,CREATE_PERSON,UPDATE_PERSON,SEQ_NO)  
+             values(#{userId},#{context},#{eventTs},#{eventWhere},#{province},#{city},#{district},#{updateTime},#{createTime},#{createPerson},#{updatePerson},#{seqNo})  
+    </insert>
+    
+    <select id="getDiaryDetailById" parameterType="int" resultType="DiaryEntity" resultMap="diaryResultMap">
+    
+    	select * from diary where diary_id=#{diaryId}
+    
+    </select>
+    
+    <update id="editDiary" parameterType="DiaryEntity">
+    
+    	update 
+    		DIARY 
+    	<set>
+    		<if test="createTime!=null">
+				CREATE_TIME=#{createTime},
+			</if>
+			
+			<if test="updateTime!=null">
+				UPDATE_TIME=#{updateTime},
+			</if>
+			
+			<if test="createPerson!=null">
+				CREATE_PERSON=#{createPerson},
+			</if>
+			
+			<if test="updatePerson!=null">
+				UPDATE_PERSON=#{updatePerson},
+			</if>
+			
+			<if test="seqNo!=null">
+				SEQ_NO=#{seqNo},
+			</if>
+			
+			<if test="context!=null">
+				CONTEXT=#{context},
+			</if>
+			
+			<if test="eventTs!=null">
+				EVENT_TS=#{eventTs},
+			</if>
+			
+			<if test="eventWhere!=null">
+				EVENT_WHERE=#{eventWhere},
+			</if>
+			
+			<if test="province!=null">
+				PROVINCE=#{province},
+			</if>
+			
+			<if test="city!=null">
+				CITY=#{city},
+			</if>
+			
+			<if test="district!=null">
+				DISTRICT=#{district},
+			</if>
+			
+			<if test="street!=null">
+				STREET=#{street},
+			</if>
+			
+			<if test="village!=null">
+				VILLAGE=#{village},
+			</if>
+	    	
+    	</set> 
+    	where DIARY_ID=#{diaryId}
+    	
+    </update>
+    
+</mapper>  

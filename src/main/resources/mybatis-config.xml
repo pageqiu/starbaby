@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>  
+    <typeAliases>  
+        <typeAlias alias="UserEntity" type="com.page.st.entity.User"/> 
+        <typeAlias alias="SummaryEntity" type="com.page.st.entity.Summary"/> 
+        <typeAlias alias="DiaryEntity" type="com.page.st.entity.Diary"/>
+         <typeAlias alias="StatisticsEntity" type="com.page.st.entity.Statistics"/>
+         <typeAlias alias="LoginEntity" type="com.page.st.entity.Login"/>
+    </typeAliases>  
+   <!--   <mappers>  
+        <mapper resource="com/page/st/mapper/UserMapper.xml" />  
+    </mappers>  -->
+</configuration> 
