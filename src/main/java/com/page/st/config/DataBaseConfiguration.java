@@ -32,6 +32,7 @@ public class DataBaseConfiguration implements EnvironmentAware {
 	  @Bean(name="dataSource")  
 	  @Primary  
 	  public BasicDataSource dataSource() {  
+		  
 	        log.debug("Configruing Write DataSource");  
 	          
 	        if(datasource == null) {
