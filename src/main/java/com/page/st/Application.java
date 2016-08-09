@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages={"com.page.st"}) 
-@SpringBootApplication
+@SpringBootApplication 
 public class Application {
 
     public static void main(String[] args) {

@@ -39,16 +39,17 @@
 	<div class="container">
 
 		<p class="lead">
-		<div id="userNamediv" th:text="${'welcome: '+session.user.userName}">Hello, userName</div>
-		<div id="logindiv"><a href="/login">亲，请登录 </a> <a href="/register">免费注册</a></div>
-		<div><a href="/gotoJournaling">写好事</a></div>
+		<nav class="navbar navbar-inverse" role="navigation"> 
+			<div id="userNamediv" th:text="${'welcome: '+session.user.userName}">Hello, userName</div>
+			<div id="logindiv"><a href="/login">亲，请登录 </a> <a href="/register">免费注册</a></div>
+			<div><a href="/gotoJournaling">记日记</a></div>
+   		</nav>
 		</p>
 
-		<p class="lead">做了好事，当然可以选择沉默，或者选择影响他人，让世界更美好;无论如何您都是好人</p>
-
+		<!--  
 		<div style="width: 50%">
 			<canvas id="canvas" height="450" width="600"></canvas>
-		</div>
+		</div>-->
 
 		<input type="hidden" id="userName" th:value="${session.user.userName}" ></input>
 		<input type="hidden" id="provinceList" th:value="${provinceList}" ></input>

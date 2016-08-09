@@ -109,6 +109,56 @@
 <table>
 <tr>
 <td>
+	 <label>语言<span>&nbsp;</span></label>
+     <!-- <select th:field="${language}" class="form-control" th:switch="${language}"
+            data-required="true">
+              <option value="0" th:case="0" th:selected="selected" >有意识</option>
+              <option value="1" th:case="1" th:selected="selected" >无意识</option>
+              <option value="2" th:case="2" th:selected="selected" >不确定</option>
+              <option value="">请选择</option>
+      </select> -->
+      
+   </td>
+   <td>
+   <label> <input type="radio" name="language" value="0" checked="checked"/>有意识</label>
+   <label> <input type="radio" name="language" value="1" />无意识</label>
+   <label> <input type="radio" name="language" value="2" />不确定</label>
+   </td>   
+</tr>
+<tr>
+ <td>指令</td>
+ <td>
+   <label> <input type="radio" name="order" value="0" checked="checked"/>0</label>
+   <label> <input type="radio" name="order" value="1" />0--5个</label>
+   <label> <input type="radio" name="order" value="2" />6--15</label>
+   <label> <input type="radio" name="order" value="3" />15个以上</label>
+   </td>  
+
+</tr>
+
+<tr>
+ <td>大运动</td>
+ <td>
+   <label> <input type="checkbox" name="sport" value="0" />站</label>
+   <label> <input type="checkbox" name="order" value="1" />走</label>
+   <label> <input type="checkbox" name="order" value="2" />跑</label>
+   <label> <input type="checkbox" name="order" value="3" />跳</label>
+   </td>  
+
+</tr>
+
+<tr>
+ <td>精细运动</td>
+ <td>
+   <label> <input type="checkbox" name="sport" value="0" />拿</label>
+   <label> <input type="checkbox" name="order" value="1" />捏</label>
+   <label> <input type="checkbox" name="order" value="2" />揉</label>
+   <!-- <label> <input type="checkbox" name="order" value="3" />跳</label> -->
+   </td>  
+
+</tr>
+<tr>
+<td>
 <textarea rows="30" cols="50" name="journaling">请输入.</textarea>
 <script type="text/javascript">CKEDITOR.replace('journaling');</script>
 </td>
