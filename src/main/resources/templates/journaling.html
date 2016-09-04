@@ -1,195 +1,221 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- viewport的<meta>标签，这个标签可以修改在大部分的移动设备上面的显示，为了确保适当的绘制和触屏缩放。-->
 
 <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
 <script src="../js/jquery-2.2.0.min.js"></script>
 <script src="../js/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-
-	$(function(){
-	    $("#checkCode").blur(function(){
-	    	myReload();
-	    })
+	$(function() {
+		$("#checkCode").blur(function() {
+			myReload();
+		})
 	})
 
-    
-    function myReload(){  
-    	
-    	$.ajax({
-            url: "http://localhost:8080/checkCode",
-            type:'POST',
-            data:{code:$.trim($("input[name=checkCode]").val())},
-            dataType:'json',
-            async:false,
-            success:function(result) {
-                if(result.flg == 1) {
-                	$("#info").html('success！'); //验证码正确提交表单
-                }else{
-                	changeImg();
-                    $("#info").html('验证码错误！');
-                    setTimeout(function(){
-                        $("#info").empty();
-                    },3000);
-                }
-            },
-            error:function(msg){
-                $("#info").html('Error:'+msg.toSource());
-            }
-            
-        })
-    	
-    }  
-    
-    function changeImg(){
-    	 var imgSrc = $("#createCheckCode");
-    	 var src = imgSrc.attr("src");
-    	 imgSrc.attr("src",chgUrl(src));
-    	}
-    	//时间戳
-    	//为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
-    	function chgUrl(url){
-		 var timestamp = (new Date()).valueOf();
-		 url = url.substring(0,17);
-		 if((url.indexOf("&amp;")>=0)){
-		  url = url + "×tamp=" + timestamp;
-		 }else{
-		  url = url + "?timestamp=" + timestamp;
-		 }
-		 return url;
+	function myReload() {
+
+		$.ajax({
+			url : "http://localhost:8080/checkCode",
+			type : 'POST',
+			data : {
+				code : $.trim($("input[name=checkCode]").val())
+			},
+			dataType : 'json',
+			async : false,
+			success : function(result) {
+				if (result.flg == 1) {
+					$("#info").html('success！'); //验证码正确提交表单
+				} else {
+					changeImg();
+					$("#info").html('验证码错误！');
+					setTimeout(function() {
+						$("#info").empty();
+					}, 3000);
+				}
+			},
+			error : function(msg) {
+				$("#info").html('Error:' + msg.toSource());
+			}
+
+		})
+
+	}
+
+	function changeImg() {
+		var imgSrc = $("#createCheckCode");
+		var src = imgSrc.attr("src");
+		imgSrc.attr("src", chgUrl(src));
+	}
+	//时间戳
+	//为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
+	function chgUrl(url) {
+		var timestamp = (new Date()).valueOf();
+		url = url.substring(0, 17);
+		if ((url.indexOf("&amp;") >= 0)) {
+			url = url + "×tamp=" + timestamp;
+		} else {
+			url = url + "?timestamp=" + timestamp;
 		}
+		return url;
+	}
 
-    	function isRightCode(){
-    	 var code = $("#checkCode").attr("value");
-    	 code = "c=" + code;
-    	 $.ajax({
-    	  type:"POST",
-    	  url:"http://localhost:8080/getCode",
-    	  data:code,
-    	  success:callback
-    	 });
-    	}
-    	function callback(data){
-    	 $("#info").html(data);
-    	}
-
+	function isRightCode() {
+		var code = $("#checkCode").attr("value");
+		code = "c=" + code;
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8080/getCode",
+			data : code,
+			success : callback
+		});
+	}
+	function callback(data) {
+		$("#info").html(data);
+	}
 </script>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		
-			if($("#userName").val() != null) {
-				$("#logindiv").hide();
-			}
-			else {
-				$("#userNamediv").hide();
-			}
-	
+	$(document).ready(function() {
+
+		if ($("#userName").val() != null) {
+			$("#logindiv").hide();
+		} else {
+			$("#userNamediv").hide();
+		}
 
 	});
-	
-	</script>
+</script>
 </head>
 <body>
 
-<div class="container">
+	<div class="container">
 
-<p class="lead">
+		<p class="lead">
+
+			<!--  
 <div><a th:href="@{/findesummarys}">首页</a></div>
 <div id="userNamediv" th:text="${'welcome: '+session.user.userName}">Hello, userName</div>
-<div id="logindiv"><a href="/login">亲，请登录 </a> <a href="/register">免费注册</a></div>
-</p>
+<div id="logindiv"><a href="/login">亲，请登录 </a> <a href="/register">免费注册</a></div>-->
 
-<form method="POST" enctype="multipart/form-data" action="/journaling">
+			<nav class="navbar navbar-default navbar-static-top" role="navigation">
+				<div>
+					<a th:href="@{/findesummarys}">首页</a>
+				</div>
+				<div id="userNamediv" th:text="${'welcome: '+session.user.userName}">Hello,
+					userName</div>
+				<div id="logindiv">
+					<a href="/login">亲，请登录 </a> <a href="/register">免费注册</a>
+				</div>
+				<!--  <div><a href="/gotoJournaling">记日记</a></div>-->
+			</nav>
 
-<table>
-<tr>
-<td>
-	 <label>语言<span>&nbsp;</span></label>
-     <!-- <select th:field="${language}" class="form-control" th:switch="${language}"
+		</p>
+		
+		<input type="hidden" id="userName" th:value="${session.user.userName}" ></input>
+		
+
+		<form method="POST" enctype="multipart/form-data" action="/journaling">
+
+			<table class="table table-striped">
+				<tr>
+					<td><label>语言<span>&nbsp;</span></label> <!-- <select th:field="${language}" class="form-control" th:switch="${language}"
             data-required="true">
               <option value="0" th:case="0" th:selected="selected" >有意识</option>
               <option value="1" th:case="1" th:selected="selected" >无意识</option>
               <option value="2" th:case="2" th:selected="selected" >不确定</option>
               <option value="">请选择</option>
-      </select> -->
-      
-   </td>
-   <td>
-   <label> <input type="radio" name="language" value="0" checked="checked"/>有意识</label>
-   <label> <input type="radio" name="language" value="1" />无意识</label>
-   <label> <input type="radio" name="language" value="2" />不确定</label>
-   </td>   
-</tr>
-<tr>
- <td>指令</td>
- <td>
-   <label> <input type="radio" name="order" value="0" checked="checked"/>0</label>
-   <label> <input type="radio" name="order" value="1" />0--5个</label>
-   <label> <input type="radio" name="order" value="2" />6--15</label>
-   <label> <input type="radio" name="order" value="3" />15个以上</label>
-   </td>  
+      </select> --></td>
+					<td><label> <input type="radio" name="language"
+							value="0" checked="checked" />有意识
+					</label> <label> <input type="radio" name="language" value="1" />无意识
+					</label> <label> <input type="radio" name="language" value="2" />不确定
+					</label></td>
+				</tr>
+				<tr>
+					<td>指令</td>
+					<td><label> <input type="radio" name="order" value="0"
+							checked="checked" />0
+					</label> <label> <input type="radio" name="order" value="1" />0--5个
+					</label> <label> <input type="radio" name="order" value="2" />6--15
+					</label> <label> <input type="radio" name="order" value="3" />15个以上
+					</label></td>
 
-</tr>
+				</tr>
 
-<tr>
- <td>大运动</td>
- <td>
-   <label> <input type="checkbox" name="sport" value="0" />站</label>
-   <label> <input type="checkbox" name="order" value="1" />走</label>
-   <label> <input type="checkbox" name="order" value="2" />跑</label>
-   <label> <input type="checkbox" name="order" value="3" />跳</label>
-   </td>  
+				<tr>
+					<td>大运动</td>
+					<td><label> <input type="checkbox" name="sport"
+							value="0" />站
+					</label> <label> <input type="checkbox" name="order" value="1" />走
+					</label> <label> <input type="checkbox" name="order" value="2" />跑
+					</label> <label> <input type="checkbox" name="order" value="3" />跳
+					</label></td>
 
-</tr>
+				</tr>
 
-<tr>
- <td>精细运动</td>
- <td>
-   <label> <input type="checkbox" name="sport" value="0" />拿</label>
-   <label> <input type="checkbox" name="order" value="1" />捏</label>
-   <label> <input type="checkbox" name="order" value="2" />揉</label>
-   <!-- <label> <input type="checkbox" name="order" value="3" />跳</label> -->
-   </td>  
+				<tr>
+					<td>精细运动</td>
+					<td><label> <input type="checkbox" name="sport"
+							value="0" />拿
+					</label> <label> <input type="checkbox" name="order" value="1" />捏
+					</label> <label> <input type="checkbox" name="order" value="2" />揉
+					</label> <label> <input type="checkbox" name="order" value="3" />搓
+					</label></td>
 
-</tr>
-<tr>
-<td>
-<textarea rows="30" cols="50" name="journaling">请输入.</textarea>
-<script type="text/javascript">CKEDITOR.replace('journaling');</script>
-</td>
-</tr>
+				</tr>
+				<tr>
+					<td colspan="2"><textarea rows="30" cols="50"
+							name="journaling">请输入.</textarea> <script type="text/javascript">
+								CKEDITOR.replace('journaling');
+							</script>
+					</td>
+				</tr>
 
-<tr>
+				<tr>
+					<!--  
 <td>
 选择图片: <input type="file" name="file"/>
-</td>
-		
-		</tr>
-		<tr>
-		<td>
-		<input type="submit" value="发布"/>
-		</td>
-		</tr>
-		</table>
-</form>
-<br/>
-<form action="/checkCode" name="codeForm" id="codeForm" method = "post">
 
-	<table>
-		<tr><td>验证码</td><td> <input name="checkCode" type="text" id="checkCode" title="验证码区分大小写" maxlength="4"/></td>
-       <td> <img id="createCheckCode" src="getCode"/>
-        <a href="#" onClick="changeImg()">看不清，换一个</a></td>
-        </tr>
-        <tr><td><div id="info"></div> </td></tr>
-	</table>
-	
-</form>
-</div>
+</td>-->
+
+					<td>
+
+						<form action="/checkCode" name="codeForm" id="codeForm"
+							method="post">
+
+							<table>
+								<tr>
+									<td>验证码</td>
+									<td><input name="checkCode" type="text" id="checkCode"
+										title="验证码区分大小写" maxlength="4" /></td>
+									<td><img id="createCheckCode" src="getCode" /> <a href="#"
+										onClick="changeImg()">看不清，换一个</a></td>
+								</tr>
+								<tr>
+									<td><div id="info"></div></td>
+								</tr>
+							</table>
+
+						</form>
+					</td>
+
+				</tr>
+				<tr>
+
+					<td><input type="submit" class="btn btn-primary" value="发布" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<p class="lead">
+	<div style="background: #ADADAD; text-align: center">copyright:pageqiu,2016</div>
+	</p>
 
 </body>
 </html>

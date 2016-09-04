@@ -38,17 +38,17 @@
 
 	<div class="container">
 
-		<p class="lead">
+			<nav class="navbar navbar-default navbar-static-top" role="navigation"> 
+			
 		<div><a th:href="@{/findesummarys}">首页</a></div>
 		<div id="userNamediv" th:text="${'welcome: '+session.user.userName}">Hello, userName</div>
 		<div id="logindiv"><a href="/login">亲，请登录 </a> <a href="/register">免费注册</a></div>
-		</p>
+		</nav>
 
-		<p class="lead">做了好事，当然可以选择沉默，或者选择影响他人，让世界更美好;无论如何您都是好人</p>
 
 		<input type="hidden" id="userName" th:value="${session.user.userName}" ></input>
 		
-		<table>
+		<table class="table table-striped">
 			<tbody>
 				<tr>
 					<td th:utext="${diary.context}" ></td>

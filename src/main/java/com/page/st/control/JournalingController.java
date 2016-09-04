@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,19 +121,67 @@ public class JournalingController {
     	return -1;
     }
     
+//    @RequestMapping(value="/journaling", method=RequestMethod.POST)
+//    public @ResponseBody String journaling(HttpServletRequest request,
+//            @RequestParam("file") MultipartFile file,@RequestParam("journaling") String text,HttpSession session){
+//    	
+//    	String codeflg = (String)request.getSession().getAttribute("codeflg");
+//    	
+//    	if(!"0".equals(codeflg)) {
+//    		return "请输入正确的验证码";
+//    	}
+//    	
+//    	String name = null;
+//    	String orginName = null;
+//    	String type = null;
+//    	
+//    	Diary diary = new Diary();
+//    	
+//    	diary.setContext(text);
+//    	diary.setUserId(((User)session.getAttribute("user")).getId());
+//
+//    	BaseValueUtil.setCreateBaseEntityValue(diary);
+//    	int num = diaryService.addDiary(diary);
+//    	
+//    	int diaryId= diary.getDiaryId();
+//    	
+//    	log.error("----diaryId----"+diaryId);
+//
+//        if (!file.isEmpty()) {
+//            try {
+//            	orginName = file.getOriginalFilename();
+//            	
+//            	int index = checkImageType(orginName);
+//            	
+//            	if(index<0){
+//            		return "图片类型不正确（jpg，jpeg,png）";
+//            	}
+//            	
+//            	type = file.getContentType();
+//                byte[] bytes = file.getBytes();
+//                //String name= ((User)session.getAttribute("user")).getId()
+//                BufferedOutputStream stream =
+//                        new BufferedOutputStream(new FileOutputStream(new File(UPLOAD_PATH+diaryId+orginName.substring(index))));
+//                stream.write(bytes);
+//                stream.close();
+//                return "You successfully uploaded  "+orginName+"--type-"+type;
+//            } catch (Exception e) {
+//                return "You failed to upload " + name + " => " + e.getMessage();
+//            }
+//        } else {
+//            return "You failed to upload " + name + " because the file was empty.";
+//        }
+//    }
+
+    
     @RequestMapping(value="/journaling", method=RequestMethod.POST)
-    public @ResponseBody String journaling(HttpServletRequest request,
-            @RequestParam("file") MultipartFile file,@RequestParam("journaling") String text,HttpSession session){
+    public String journaling(HttpServletRequest request,@RequestParam("journaling") String text,HttpSession session,Model model){
     	
     	String codeflg = (String)request.getSession().getAttribute("codeflg");
     	
     	if(!"0".equals(codeflg)) {
     		return "请输入正确的验证码";
     	}
-    	
-    	String name = null;
-    	String orginName = null;
-    	String type = null;
     	
     	Diary diary = new Diary();
     	
@@ -145,31 +194,9 @@ public class JournalingController {
     	int diaryId= diary.getDiaryId();
     	
     	log.error("----diaryId----"+diaryId);
+    	
+    	return "redirect:/findesummarys";
 
-        if (!file.isEmpty()) {
-            try {
-            	orginName = file.getOriginalFilename();
-            	
-            	int index = checkImageType(orginName);
-            	
-            	if(index<0){
-            		return "图片类型不正确（jpg，jpeg,png）";
-            	}
-            	
-            	type = file.getContentType();
-                byte[] bytes = file.getBytes();
-                //String name= ((User)session.getAttribute("user")).getId()
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(UPLOAD_PATH+diaryId+orginName.substring(index))));
-                stream.write(bytes);
-                stream.close();
-                return "You successfully uploaded  "+orginName+"--type-"+type;
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload " + name + " because the file was empty.";
-        }
     }
 
 

@@ -14,8 +14,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.page.st.entity.Diary;
 import com.page.st.entity.Statistics;
@@ -72,7 +74,7 @@ public class DiaryController extends WebMvcConfigurerAdapter {
     
     
     @RequestMapping(value="/editDiary", method=RequestMethod.POST)
-    public String editDiary(@Valid DiaryForm diaryForm, BindingResult bindingResult, Model model) {
+    public String editDiary(@Valid DiaryForm diaryForm, BindingResult bindingResult, Model model,RedirectAttributes rattr) {
     	
     	log.error("--diaryForm-"+diaryForm);
     	Diary diary = new Diary();
@@ -83,7 +85,11 @@ public class DiaryController extends WebMvcConfigurerAdapter {
 //    	
     	model.addAttribute("diary", diary);
     	
-        return "editDiary";
+    	rattr.addAttribute("diaryId", diary.getDiaryId());
+    	
+    	return "redirect:/gotoDiaryDetail";
+    	
+        // return "/gotoEditDiary?diaryId="+diary.getDiaryId();
     }
 
 //    @RequestMapping(value="/test1", method=RequestMethod.POST)

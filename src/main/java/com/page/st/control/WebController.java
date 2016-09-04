@@ -71,29 +71,29 @@ public class WebController extends WebMvcConfigurerAdapter {
     }
     @RequestMapping(value="/findesummarys", method=RequestMethod.GET)
     public String findsummarys(@Valid SummaryForm summaryForm, BindingResult bindingResult,Model model) {
-    	log.error("-----findesummarys=-----");
-        if (bindingResult.hasErrors()) {
-            return "form";
-        }
-        
+    	log.error("-----findesummarys=---get--");
+//        if (bindingResult.hasErrors()) {
+//            return "form";
+//        }
+//        
         List<Summary> list = summaryService.getAllSummarys();
         model.addAttribute("summarys", list);
-		log.error("resuslt=="+list);
-		
-		List<Statistics> statisticsList = statisticsService.getStatisticsAll();
-		
-		List<String> provinceList = new ArrayList<String>();
-		List<String> valueList = new ArrayList<String>();
-		
-		if(statisticsList != null) {
-			for(int i=0;i < statisticsList.size(); i++) {
-				provinceList.add(statisticsList.get(i).getProvince());
-				valueList.add(String.valueOf(statisticsList.get(i).getStatistics()));
-			}
-		}
-		
-		model.addAttribute("provinceList", provinceList);
-		model.addAttribute("valueList", valueList);
+//		log.error("resuslt=="+list);
+//		
+//		List<Statistics> statisticsList = statisticsService.getStatisticsAll();
+//		
+//		List<String> provinceList = new ArrayList<String>();
+//		List<String> valueList = new ArrayList<String>();
+//		
+//		if(statisticsList != null) {
+//			for(int i=0;i < statisticsList.size(); i++) {
+//				provinceList.add(statisticsList.get(i).getProvince());
+//				valueList.add(String.valueOf(statisticsList.get(i).getStatistics()));
+//			}
+//		}
+//		
+//		model.addAttribute("provinceList", provinceList);
+//		model.addAttribute("valueList", valueList);
 
         return "first";
     }
